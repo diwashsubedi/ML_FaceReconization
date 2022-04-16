@@ -48,7 +48,11 @@ def name_attendance(images,classNames):
                 markAttendance(name)
 
         cv2.imshow('Webcam', img)
-        cv2.waitKey(1)
+        ch = cv2.waitKey(1)
+        if ch & 0XFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
