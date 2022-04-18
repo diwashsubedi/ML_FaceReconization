@@ -56,10 +56,10 @@ def name_attendance(images,classNames):
 
 
 if __name__ == '__main__':
-    path = 'ImageAttendance'
+    path = 'ImageAttendance' # file Path
     imges = []
     classNames = []
-    myList = os.listdir(path)
+    myList = os.listdir(path)  # list of images in that path
     for cl in myList:
         crtImg = cv2.imread(f'{path}/{cl}')
         imges.append(crtImg)
