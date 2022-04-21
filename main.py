@@ -3,7 +3,8 @@ import numpy as np
 import face_recognition
 import os
 from attendance import markAttendance
-
+from Add_Student import add_student
+from student_analysis import student_analysis
 
 def name_attendance(images,classNames):
     # find encoding images
@@ -60,8 +61,18 @@ if __name__ == '__main__':
     imges = []
     classNames = []
     myList = os.listdir(path)  # list of images in that path
-    for cl in myList:
-        crtImg = cv2.imread(f'{path}/{cl}')
-        imges.append(crtImg)
-        classNames.append(os.path.splitext(cl)[0])
-    name_attendance(imges,classNames)
+    print("Do you like to take attendance or Add new Student\n")
+    choose = int(input("Press 1 for attendance, Press 2 to add new student,\nPress 3 for student analysis,  "
+                       "Press 0 for end Attendance system: "))
+    if choose == 1:
+        for cl in myList:
+            crtImg = cv2.imread(f'{path}/{cl}')
+            imges.append(crtImg)
+            classNames.append(os.path.splitext(cl)[0])
+        name_attendance(imges,classNames)
+    elif choose == 2:
+        add_student()
+    elif choose == 3:
+        student_analysis()
+    else:
+        print("Exit from the program")
