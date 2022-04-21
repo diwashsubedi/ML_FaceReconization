@@ -6,7 +6,8 @@ from attendance import markAttendance
 from Add_Student import add_student
 from student_analysis import student_analysis
 
-def name_attendance(images,classNames):
+
+def name_attendance(images, classNames):
     # find encoding images
     def findEncodings(images):
         encodeList = []
@@ -15,6 +16,7 @@ def name_attendance(images,classNames):
             encode = face_recognition.face_encodings(img)[0]
             encodeList.append(encode)
         return encodeList
+
     encodeListKnown = findEncodings(images)
     cap = cv2.VideoCapture(0)
 
@@ -57,7 +59,7 @@ def name_attendance(images,classNames):
 
 
 if __name__ == '__main__':
-    path = 'ImageAttendance' # file Path
+    path = 'ImageAttendance'  # file Path
     imges = []
     classNames = []
     myList = os.listdir(path)  # list of images in that path
@@ -69,7 +71,7 @@ if __name__ == '__main__':
             crtImg = cv2.imread(f'{path}/{cl}')
             imges.append(crtImg)
             classNames.append(os.path.splitext(cl)[0])
-        name_attendance(imges,classNames)
+        name_attendance(imges, classNames)
     elif choose == 2:
         add_student()
     elif choose == 3:
