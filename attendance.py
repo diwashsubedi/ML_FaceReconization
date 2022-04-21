@@ -19,7 +19,6 @@ def markAttendance(name):
                 now = datetime.now()
                 tiString = now.strftime('%H:%M:%S')
                 f.writelines(f'\n{name},{dtstr},{tiString}')
-            # f.writelines(f'\n{name},{dtstr}')
         if name not in nameList:
             now = datetime.now()
             tiString = now.strftime('%H:%M:%S')
