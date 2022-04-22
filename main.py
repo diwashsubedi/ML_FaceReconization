@@ -6,7 +6,7 @@ from attendance import markAttendance
 from Add_Student import add_student
 from student_analysis import student_analysis
 
-
+# function which helps to
 def name_attendance(images, classNames):
     # find encoding images
     def findEncodings(images):
@@ -73,8 +73,8 @@ if __name__ == '__main__':
             classNames.append(os.path.splitext(cl)[0])
         name_attendance(imges, classNames)
     elif choose == 2:
-        add_student()
+        add_student()  # call the function from the Add_Student module
     elif choose == 3:
-        student_analysis()
+        student_analysis()  # call the function from the student_analysis module
     else:
         print("Exit from the program")
