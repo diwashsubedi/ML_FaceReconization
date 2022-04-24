@@ -4,41 +4,48 @@ import matplotlib.pyplot as plt
 import cv2
 
 
+# this function will display the group analysis of the attendance file
 def group_analysis(df_all):
     df_all.insert(len(df_all.columns), 'Present', 1)
-    df = df_all[['Name','Present']]
+    df = df_all[['Name', 'Present']]
     df = df.groupby(df.columns.tolist(), as_index=False).size()
     print(df)
-    plt.figure(figsize=(12,5))
-    plt.subplot(131)
-    plt.bar(df['Name'],df['size'])
+    plt.figure(figsize=(13, 5))
+    # plt.subplot(131)
+    # plt.bar(df['Name'], df['size'])
     plt.xticks(rotation=16)
-    plt.subplot(132)
+    # plt.subplot(132)
     plt.scatter(df['Name'], df['size'])
-    plt.xticks(rotation=16)
-    plt.subplot(133)
-    plt.xticks(rotation=16)
-    plt.plot(df['Name'], df['size'])
-    plt.suptitle("Class Attendance")
+    # plt.xticks(rotation=16)
+    # plt.subplot(132)
+    # plt.xticks(rotation=16)
+    # plt.plot(df['Name'], df['size'])
+    # plt.suptitle("Class Attendance")
+    plt.title("Class Attendance")
     plt.show()
 
+    # second analysis
+    plt.figure(figsize=(10, 7))
     daily_attendance = df_all[['Date', 'Present']]
-    print("df_all",daily_attendance)
+    print("df_all", daily_attendance)
     daily_attendance = daily_attendance.groupby(daily_attendance.columns.tolist(), as_index=False).size()
     print(daily_attendance)
     plt.xticks(rotation=20)
+    plt.xlabel("Date")
+    plt.ylabel("No. of students")
     plt.title("Total number of students presents")
     plt.plot(daily_attendance['Date'], daily_attendance['size'])
     plt.show()
 
 
+# this function will display the 3 subplot of the admin entered name
 def draw_graph(name, df):
     df.insert(len(df.columns), 'Present', 1)
     df = df.set_index(df['Date'])
     print(type(df['Date']))
     print(df)
     daily_attendance = df.Present.resample('D').asfreq().fillna(0)
-    print("daily_attendance",daily_attendance)
+    print("daily_attendance", daily_attendance)
     plt.xticks(rotation=20)
     plt.plot(daily_attendance)
     plt.savefig('Student_Analysis/{}.jpg'.format(name))
@@ -54,15 +61,17 @@ def student_analysis():
     print(names_of_student)
 
     print("Do you want Single student Analysis or Group analysis")
-    name = input("Press 1 for Group analysis or Enter Name: ")
-    if name == '1':
+    name = input("Press 1 for Group analysis or Enter Name: ").upper()
+    if name == '1':  # call the function for group analysis
         group_analysis(df_attendance)
 
     elif name in df_attendance["Name"].values:
-        #name = input("Enter the name of the student: ")  # taking the  name from the user
-        df_attendance_name = df_attendance.loc[(df_attendance["Name"] == name)]
-        draw_graph(name, df_attendance_name)
+        # name = input("Enter the name of the student: ")  # taking the  name from the user
+        df_attendance_name = df_attendance.loc[(df_attendance["Name"] == name)]  # take only that row which matches
+        # input name with system name
+        draw_graph(name, df_attendance_name)  # call function to display the single person analysis
 
+        # create the single person analysis
         if name in names_of_student:
             image = cv2.imread("ImageAttendance/{}.jpg".format(name))  # reading the user entered name image
             width, height = 450, 550  # assigning the height and the width

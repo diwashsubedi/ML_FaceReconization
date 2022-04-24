@@ -6,19 +6,20 @@ from attendance import markAttendance
 from Add_Student import add_student
 from student_analysis import student_analysis
 
-# function which helps to
+
+# function which helps to capture
 def name_attendance(images, classNames):
     # find encoding images
     def findEncodings(images):
         encodeList = []
         for img in images:
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            encode = face_recognition.face_encodings(img)[0]
-            encodeList.append(encode)
-        return encodeList
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # convert from BGR format to RGB
+            encode = face_recognition.face_encodings(img)[0]  # find first encoded value of the image
+            encodeList.append(encode)  # add all the first value of images into the list encodeList
+        return encodeList  # return the final list
 
     encodeListKnown = findEncodings(images)
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0)  # open the webcam
 
     while True:
         # reading data from webcam
@@ -40,6 +41,7 @@ def name_attendance(images, classNames):
             # print(faceDis)
             matchIndex = np.argmin(faceDis)
 
+            # add rectangle frame and name on the face if the camera face matches to system image
             if matches[matchIndex]:
                 name = classNames[matchIndex].upper()
                 # print(name)
@@ -58,11 +60,7 @@ def name_attendance(images, classNames):
     cv2.destroyAllWindows()
 
 
-if __name__ == '__main__':
-    path = 'ImageAttendance'  # file Path
-    imges = []
-    classNames = []
-    myList = os.listdir(path)  # list of images in that path
+def admin():
     print("Do you like to take attendance or Add new Student\n")
     choose = int(input("Press 1 for attendance, Press 2 to add new student,\nPress 3 for student analysis,  "
                        "Press 0 for end Attendance system: "))
@@ -78,3 +76,18 @@ if __name__ == '__main__':
         student_analysis()  # call the function from the student_analysis module
     else:
         print("Exit from the program")
+
+
+if __name__ == '__main__':
+    path = 'ImageAttendance'  # file Path
+    imges = []
+    classNames = []
+    myList = os.listdir(path)  # list of images in that path
+    print("Are you student or Professor")
+    system_type = int(input("Press 1 for Student Press 2 for Professor: "))
+    if system_type == 1:
+        student_analysis()
+    elif system_type == 2:
+        admin()
+    else:
+        print("Wrong Input")
